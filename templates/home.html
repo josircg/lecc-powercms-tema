@@ -59,88 +59,43 @@
         </section>
     {% endif %}
 
+    {% get_section_articles 'noticias' 3 as noticias %}
+    {% get_section 'noticias' as noticia_section %}
     <!-- Notícias -->
-    <section id="noticias" class="py-5">
-        <div class="container">
-            <h2>Últimas Notícias</h2>
-            <div class="row g-4">
-
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <a href="noticia.html"><img src="{% static 'img/noticia1.png' %}" class="card-img-top" alt="Notícia"></a>
-                        <div class="card-body">
-                            <a href="noticia.html">
-                                <h5 class="card-title">
-                                    Raquel Paiva e João Paulo Malerba ministram novo curso para mestrado e doutorado
-                                </h5>
-                            </a>
-                            <p class="card-text small text-muted">
-                                A Prof.ª Dr.ª Raquel Paiva e o Prof. Dr. João Paulo Malerba irão ministrar o curso
-                                Da Comunidade ao Comum: por uma
-                                epistemologia da Comunicação Comunitária no Programa de Pós-Graduação...
-                            </p>
-                        </div>
-                        <div
-                            class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
-                            <small class="text-muted">13/12/2018</small>
-                            <a href="noticia.html" class="text-decoration-none fw-semibold small leiamais">Leia mais
-                                →</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <a href="noticia.html"><img src="{% static 'img/noticia1.png' %}" class="card-img-top" alt="Notícia"></a>
-                        <div class="card-body">
-                            <a href="noticia.html">
-                                <h5 class="card-title">
-                                    Raquel Paiva e João Paulo Malerba ministram novo curso para mestrado e doutorado
-                                </h5>
-                            </a>
-                            <p class="card-text small text-muted">
-                                A Prof.ª Dr.ª Raquel Paiva e o Prof. Dr. João Paulo Malerba irão ministrar o curso
-                                Da Comunidade ao Comum: por uma
-                                epistemologia da Comunicação Comunitária no Programa de Pós-Graduação...
-                            </p>
-                        </div>
-                        <div
-                            class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
-                            <small class="text-muted">13/12/2018</small>
-                            <a href="noticia.html" class="text-decoration-none fw-semibold small leiamais">Leia mais
-                                →</a>
+    {% if noticias %}
+        <section id="noticias" class="py-5">
+            <div class="container">
+                <h2>Últimas Notícias</h2>
+                <div class="row g-4">
+                {% for noticia in noticias %}                    
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <a href="{{noticia.get_absolute_url}}"><img src="{{noticia.first_image}}" class="card-img-top" alt="Notícia"></a>
+                            <div class="card-body">
+                                <a href="{{noticia.get_absolute_url}}">
+                                    <h5 class="card-title">
+                                        {{noticia.title}}
+                                    </h5>
+                                </a>
+                                <p class="card-text small text-muted">
+                                    {{noticia.content|safe|striptags|truncatewords:30}}
+                                </p>
+                            </div>
+                            <div
+                                class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{noticia.created_at|date:"d/m/Y"}}</small>
+                                <a href="noticia.html" class="text-decoration-none fw-semibold small leiamais">Leia mais→</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <a href="noticia.html"><img src="{% static 'img/noticia1.png' %}" class="card-img-top" alt="Notícia"></a>
-                        <div class="card-body">
-                            <a href="noticia.html">
-                                <h5 class="card-title">
-                                    Raquel Paiva e João Paulo Malerba ministram novo curso para mestrado e doutorado
-                                </h5>
-                            </a>
-                            <p class="card-text small text-muted">
-                                A Prof.ª Dr.ª Raquel Paiva e o Prof. Dr. João Paulo Malerba irão ministrar o curso
-                                Da Comunidade ao Comum: por uma
-                                epistemologia da Comunicação Comunitária no Programa de Pós-Graduação...
-                            </p>
-                        </div>
-                        <div
-                            class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
-                            <small class="text-muted">13/12/2018</small>
-                            <a href="noticia.html" class="text-decoration-none fw-semibold small leiamais">Leia mais
-                                →</a>
-                        </div>
-                    </div>
+                {% endfor %}
+                   
+                <!-- Botão Carregar Mais -->
+                <div class="text-center mt-5">
+                    <a href="{{noticia_section.get_absolute_url}}" class="btn btn-warning fw-bold text-white px-5 py-2">Ver todas</a>
                 </div>
             </div>
-
-            <!-- Botão Carregar Mais -->
-            <div class="text-center mt-5">
-                <a href="noticias.html" class="btn btn-warning fw-bold text-white px-5 py-2">Ver todas</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 </main>
 {% endblock%}
