@@ -1,0 +1,36 @@
+{% load mptt_tags menu_tags static admin_urls %}
+<nav class="navbar navbar-expand-md navbar-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav ms-auto">
+                {% recursetree menu_itens %}
+                    {% if node.is_leaf_node %}
+                        <li class="nav-item mx-2{% if node|is_active:request %} active{% endif %}">
+                            <a class="nav-link fw-bold text-uppercase" href="{{ node.get_link|default:'#' }}">{{ node.name }}</a>
+                        </li>
+                    {% else %}
+                        {% if node.get_level == 0 %}
+                            <li class="nav-item dropdown mx-2{% if node|is_active:request %} active{% endif %}">
+                                <a href="{{ node.get_link|default:'#' }}" class="nav-link fw-bold text-uppercase dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{ node.name }}</a>
+                                <ul class="dropdown-menu" role="menu">
+                                    {{ children }}
+                                </ul>
+                            </li>
+                        {% elif node.get_level > 0 %}
+                            <li class="dropdown-submenu nav-item mx-2{% if node|is_active:request %} active{% endif %}">
+                                <a href="{{ node.get_link|default:'#' }}" class="dropdown-item dropdown-toggle fw-bold text-uppercase" data-bs-toggle="dropdown" aria-expanded="false">{{ node.name }}</a>
+                                <ul class="dropdown-menu">
+                                    {{ children }}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endrecursetree %}
+            </ul>
+        </div>
+    </div>
+</nav>
