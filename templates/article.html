@@ -20,18 +20,18 @@
 
 {% block content %}
 <main>
-        <section id="hero">
-            <div class="container">
-                <img src="{{article.first_image}}" class="img-fluid" alt="">
-            </div>
-        </section>
+    <section id="hero">
+        <div class="container">
+            <img src="{{article.first_image}}" class="img-fluid" alt="">
+        </div>
+    </section>
 
-        <section id="conteudo" class="pt-4 pb-5">
-            <div class="container">
-                <p>{{ article.created_at|date:"d/m/Y" }}</p>
-                <h1 class="fw-bold mb-3">{{article.title}}</h1>
-                {{article.content|safe}}
-            </div>
-        </section>
-    </main>
+    <section id="conteudo" class="pt-4 pb-5">
+        <div class="container">
+            <p>{{ article.created_at|date:"d/m/Y" }}</p>
+            <h1 class="fw-bold mb-3">{{article.title}}</h1>
+            {{article.content|safe}}
+        </div>
+    </section>
+</main>
 {% endblock content %}
