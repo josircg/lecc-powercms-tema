@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load cms_tags static %}
+
+{% block content %}
+<main>
+    <section id="conteudo" class="pt-4 pb-5">
+        <div class="container" id="acervo">
+            <h1 class="fw-bold mb-3">{{section.title}}</h1>
+
+            <div class="search">
+                <form action="" method="GET" class="d-flex gap-2">                  
+                    <input type="text" name="q" class="form-control search-input" value="{{request.GET.q}}"
+                        placeholder="Digite um termo para buscar no acervo...">
+                    <button class="btn btn-primary search-button">
+                        <i class="fas fa-search"></i>
+                        <span> Buscar</span>
+                    </button>
+                </form>
+            </div>
+            <div class="itens">
+                {% for article in articles %}
+                <div class="item">
+                    <a href="{{article.get_absolute_url}}" class="titulo">
+                        <p>{{article.title}}</p>
+                    </a>
+                    <div class="tags">
+                        {% get_article_attributes article.slug key='tag' as tags %}
+                        {% for tag in tags %}
+                            <a href="{{article.get_absolute_url}}" class="badge bg-warning">{{tag.value}}</a>
+                        {% endfor %}
+                    </div>                                        
+                </div>       
+                {% endfor %}
+            </div>         
+            <nav aria-label="Paginação" class="mt-5">
+                <ul class="pagination justify-content-center custom-pagination gap-2">
+                    {% if articles.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% page_parameters articles.previous_page_number 'page' %}">Anterior</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">Anterior</a>
+                        </li>
+                    {% endif %}
+                    {% for page_num in articles.paginator.page_range %}
+                        <li class="page-item {% if articles.number == page_num %}active{% endif %}">
+                            <a class="page-link" href="{% page_parameters page_num 'page' %}">{{ page_num }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if articles.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% page_parameters articles.next_page_number 'page' %}">Próximo</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link">Próximo</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>              
+        </div>
+    </section>
+</main>
+{% endblock content %}
