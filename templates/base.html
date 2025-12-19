@@ -6,8 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% site_name %}
-    <title>{{ site_name }}</title>
+    <title>{% site_name %}</title>
     <meta name="description" content="{% cleanwhitespace %}{% block description %}{% endblock %}{% endcleanwhitespace %}">
     <meta name="keywords" content="{% cleanwhitespace %}{% block keywords %}{% endblock %}{% endcleanwhitespace %}">
 
@@ -18,16 +17,15 @@
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="{{ site_name }}">
+    <meta property="og:title" content="{% site_name %}">
     <meta property="og:description"
         content="O LECC investiga comunicação comunitária, mediações socioculturais, sociabilidade e dinâmicas de comunidade, reunindo pesquisadores da UFRJ em estudos e práticas inovadoras.">
     <meta property="og:image" content="{% static 'img/og.png' %}">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LECC – Laboratório de Estudos em Comunicação Comunitária">
-    <meta name="twitter:description"
-        content="Pesquisa, ensino e prática em comunicação comunitária, mídias, território, sociedade e comunidade.">
+    <meta name="twitter:title" content="{% site_name %}">
+    <meta name="twitter:description" content="Pesquisa, ensino e prática em comunicação comunitária, mídias, território, sociedade e comunidade.">
     <meta name="twitter:image" content="{% static 'img/og.png' %}">
 
     <!-- Favicon -->
@@ -73,11 +71,11 @@
                             </form>
                         </div>
                     </li>
-                    {% get_article_attributes 'midias-sociais' as midias %}
-                    {% for midia in midias %}
+                    {% get_article 'midias-sociais' as midias %}
+                    {% for midia in midias.articleattribute_set.all %}
                     <li class="nav-item mx-2">
                         <a class="nav-link" href="{{midia.value}}" target="_blank">
-                            <i class="fab {{midia.key}}"></i>
+                            <i class="fab {{midia.attrib}}"></i>
                         </a>
                     </li>
                     {% endfor %}
@@ -135,4 +133,5 @@
 
 
 </html>
+
 
