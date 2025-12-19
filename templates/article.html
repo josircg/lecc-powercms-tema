@@ -20,11 +20,13 @@
 
 {% block content %}
 <main>
+    {% if article.first_image %}
     <section id="hero">
         <div class="container">
             <img src="{{article.first_image}}" class="img-fluid" alt="">
         </div>
     </section>
+    {%endif%}
 
     <section id="conteudo" class="pt-4 pb-5">
         <div class="container">
